@@ -167,25 +167,31 @@ initBoard = do
   md <- getLine
   case readMaybe md :: Maybe Int of 
     Just d -> do
-      putStrLn $ "\nBoard size set to " ++ show d
-      return (b, d)
-        where b = replicate (d * d) Empty
+      if d <= 0 then do
+        putStrLn "\nInvalid  board size"
+        initBoard
+      else do
+        putStrLn $ "\nBoard size set to " ++ show d
+        return (b, d)
+          where b = replicate (d * d) Empty
     Nothing -> do
       putStrLn "\nInvalid board size."
       initBoard
 
 -- Checks if user wants to play again
-playAgain :: IO Bool
-playAgain = do
+again :: IO()
+again = do
   putStrLn "\nPlay again? [y/n]"
   a <- getLine
-  if a `elem` ["y", "n"] then
-    return $ a == "y"
-  else do
-    putStrLn "\nInvalid input."
-    playAgain
-
-
+  case a of
+    "y" -> do
+      main
+    "n" -> do
+      putStrLn "\nThank you for playing!\n"
+      return ()
+    _ -> do
+      putStrLn "\nInvalid input"
+      again
 
 -- Print a welcome message, read the board dimension, invoke playGame and
 -- exit with a suitable message.
@@ -194,10 +200,7 @@ main = do
   putStrLn "\nWelcome to TicTacToe!"
   d <- initBoard
   playGame d X
-  a <- playAgain
-  if a then main else do
-    putStrLn "\nThank you for playing!"  
-    return ()
+  again
 
   
   
