@@ -7,7 +7,13 @@ gameOverTestCases
    = [ testBoard1 ==> True
      , testBoard2 ==> False
      , testBoard3 ==> True
+     , testBoard4 ==> False
      ]
+
+gameDrawnTestCases
+  = [testBoard1 ==> False
+   , testBoard2 ==> False
+   , testBoard4 ==> True]
 
 parsePositionTestCases
    = [
@@ -17,6 +23,7 @@ parsePositionTestCases
      , ("0 %1") ==> (Nothing)
      , ("") ==> (Nothing)
      , ("1 2 3") ==> (Nothing)
+     , ("S S") ==> (Nothing)
      ]
 
 tryMoveTestCases
@@ -28,6 +35,7 @@ tryMoveTestCases
     , (O,(3,3),testBoard1) ==> (Just ([Taken O,Taken X,Empty,Taken O,Taken O,
                                 Empty,Taken X,Taken X,Taken O,Empty,Empty,Taken
                                 X,Taken O,Taken X,Empty,Taken O],4))
+    , (X,(0,0),testBoard4) ==> Nothing
     ]
 
 -- You can add your own test cases above
@@ -36,6 +44,8 @@ allTestCases
   = [
       TestCase "gameOver" (gameOver)
                gameOverTestCases
+    , TestCase "gameDrawn" (gameDrawn)
+               gameDrawnTestCases
     , TestCase "parsePosition" (parsePosition)
                parsePositionTestCases
     , TestCase "tryMove" (uncurry3 tryMove)

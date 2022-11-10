@@ -204,7 +204,7 @@ main = do
 
 -------------------------------------------------------------------
 
-testBoard1, testBoard2, testBoard3 :: Board
+testBoard1, testBoard2, testBoard3, testBoard4 :: Board
 
 testBoard1
   = ([Taken O,Taken X,Empty,Taken O,
@@ -225,3 +225,9 @@ testBoard3
       Taken O,Taken X,Empty,Empty,Taken X,
       Taken X,Empty,Taken O,Empty,Empty],
       5)
+
+testBoard4
+  = ([Taken O, Taken X, Taken X,
+      Taken X, Taken O, Taken O,
+      Taken O, Taken X, Taken X],
+      3)
